@@ -51,6 +51,9 @@ class CheatActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This is my companion object
+     */
     companion object {
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
             return Intent (packageContext, CheatActivity::class.java).apply {
