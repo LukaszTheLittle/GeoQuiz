@@ -23,6 +23,9 @@ class CheatActivity : AppCompatActivity() {
         ViewModelProviders.of(this).get(CheatViewModel::class.java)
     }
 
+    /**
+     * This is my onCreate method
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cheat)
