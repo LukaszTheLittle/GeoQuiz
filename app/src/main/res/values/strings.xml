@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="app_name">Jak myślisz?</string>
+    <string name="question_noriaki">Noriaki pochodzi z Poznania</string>
+    <string name="question_audi">Audi - cztery zera na masce i piąte w środku</string>
+    <string name="question_kotlin">Ten quiz napisano w języku Kotlin</string>
+    <string name="question_deska">Snowboard jest gorszy niż narty</string>
+    <string name="question_btc">Bitcoin w przyszłości osiągnie cenę 1.000.000$</string>
+    <string name="true_button">Prawda</string>
+    <string name="false_button">Fałsz</string>
+    <string name="correct_toast">Masz rację!</string>
+    <string name="incorrect_toast">Pomyliłeś się</string>
+    <string name="next_button">Dalej</string>
+    <string name="prev_button">Wstecz</string>
+    <string name="warning_text">Na pewno chcesz to zrobić?</string>
+    <string name="show_answer_button">Pokaż odpowiedź</string>
+    <string name="cheat_button">Oszukaj!</string>
+    <string name="judgment_toast">Ty krętaczu</string>
+
+</resources>
