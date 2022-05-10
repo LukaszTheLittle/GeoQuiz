@@ -23,6 +23,9 @@ class CheatActivity : AppCompatActivity() {
         ViewModelProviders.of(this).get(CheatViewModel::class.java)
     }
 
+    /**
+     * This is my onCreate method
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cheat)
@@ -48,6 +51,9 @@ class CheatActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This is my companion object
+     */
     companion object {
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
             return Intent (packageContext, CheatActivity::class.java).apply {
