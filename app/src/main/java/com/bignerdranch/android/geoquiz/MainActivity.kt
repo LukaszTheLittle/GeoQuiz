@@ -14,10 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-
-private const val TAG = "MainActivity"
-private const val KEY_INDEX = "index"
-private const val REQUEST_CODE_CHEAT = 0
+import com.bignerdranch.android.geoquiz.CheatActivity.Companion.EXTRA_ANSWER_SHOWN
 
 class MainActivity : AppCompatActivity() {
 
@@ -144,6 +141,12 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_CHEAT) {
             quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         }
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
+        private const val KEY_INDEX = "index"
+        private const val REQUEST_CODE_CHEAT = 0
     }
 
 }
