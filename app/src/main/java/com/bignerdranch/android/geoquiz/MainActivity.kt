@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         prevButton = findViewById(R.id.prev_button)
         cheatButton = findViewById(R.id.cheat_button)
         nextQuestionTextView = findViewById(R.id.question_text_view)
-        nextQuestionLinearLayout = findViewById(R.id.question_linear_layout)
+        nextQuestionLinearLayout = findViewById(R.id.question_constraint_layout)
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
