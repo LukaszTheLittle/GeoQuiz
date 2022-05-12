@@ -20,7 +20,7 @@
 
     <Button
         android:id="@+id/false_button"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/false_button"
         app:layout_constraintEnd_toStartOf="@+id/true_button"
@@ -30,7 +30,7 @@
 
     <Button
         android:id="@+id/true_button"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/true_button"
         app:layout_constraintStart_toEndOf="@id/false_button"
@@ -40,7 +40,7 @@
 
         <Button
         android:id="@+id/prev_button"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/arrow_left"
         android:drawablePadding="4dp"
@@ -52,7 +52,7 @@
 
     <Button
         android:id="@+id/next_button"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/arrow_right"
         android:drawablePadding="4dp"
