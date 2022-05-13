@@ -53,28 +53,32 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             quizViewModel.moveToNext()
+            isAnswered()
             updateQuestion()
         }
 
         prevButton.setOnClickListener {
             quizViewModel.moveToPrev()
+            isAnswered()
             updateQuestion()
         }
 
         nextQuestionTextView.setOnClickListener {
             quizViewModel.moveToNext()
+            isAnswered()
             updateQuestion()
         }
 
         nextQuestionLinearLayout.setOnClickListener {
             quizViewModel.moveToNext()
+            isAnswered()
             updateQuestion()
         }
 
         cheatButton.setOnClickListener {
             // start CheatActivity
-            val answerIsTrue = quizViewModel.currentQuestionAnswer
-            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            val correctAnswer = quizViewModel.currentQuestionAnswer
+            val intent = CheatActivity.newIntent(this@MainActivity, correctAnswer)
             getResult.launch(intent)
         }
 
@@ -121,6 +125,10 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
+        trueButton.isEnabled = false
+        falseButton.isEnabled = false
+        quizViewModel.questionIsAnswered()
+
         val messageResId = when {
             quizViewModel.isCheater -> R.string.judgment_toast
             userAnswer == correctAnswer -> R.string.correct_toast
@@ -130,6 +138,12 @@ class MainActivity : AppCompatActivity() {
         val toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 300)
         toast.show()
+    }
+
+    fun isAnswered () {
+        val isQuestionAnswered = quizViewModel.isCurrentQuestionAnswered
+        trueButton.isEnabled = !isQuestionAnswered
+        falseButton.isEnabled = !isQuestionAnswered
     }
 
     private val getResult = registerForActivityResult(
