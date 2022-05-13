@@ -53,25 +53,25 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             quizViewModel.moveToNext()
-            isAnswered()
+            updateButtonsEnabledState()
             updateQuestion()
         }
 
         prevButton.setOnClickListener {
             quizViewModel.moveToPrev()
-            isAnswered()
+            updateButtonsEnabledState()
             updateQuestion()
         }
 
         nextQuestionTextView.setOnClickListener {
             quizViewModel.moveToNext()
-            isAnswered()
+            updateButtonsEnabledState()
             updateQuestion()
         }
 
         nextQuestionLinearLayout.setOnClickListener {
             quizViewModel.moveToNext()
-            isAnswered()
+            updateButtonsEnabledState()
             updateQuestion()
         }
 
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    fun isAnswered() {
+    fun updateButtonsEnabledState() {
         val isQuestionAnswered = quizViewModel.isCurrentQuestionAnswered
         trueButton.isEnabled = !isQuestionAnswered
         falseButton.isEnabled = !isQuestionAnswered
