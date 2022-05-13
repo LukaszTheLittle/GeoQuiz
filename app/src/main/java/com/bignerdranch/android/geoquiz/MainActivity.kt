@@ -1,6 +1,6 @@
 package com.bignerdranch.android.geoquiz
 
-import android.content.Intent
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.bignerdranch.android.geoquiz.CheatActivity.Companion.EXTRA_ANSWER_SHOWN
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nextQuestionLinearLayout: View
 
     private val quizViewModel: QuizViewModel by lazy {
-        ViewModelProviders.of(this).get(QuizViewModel::class.java)
+        ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             // start CheatActivity
             val answerIsTrue = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
-            startActivityForResult(intent, REQUEST_CODE_CHEAT)
+            getResult.launch(intent)
         }
 
         updateQuestion()
@@ -131,17 +132,16 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE_CHEAT) {
-            quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
-        }
+    private val getResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+       if (it.resultCode == Activity.RESULT_OK) {
+           quizViewModel.isCheater = it.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+       }
     }
 
     companion object {
         private const val TAG = "MainActivity"
         private const val KEY_INDEX = "index"
-        private const val REQUEST_CODE_CHEAT = 0
     }
 }

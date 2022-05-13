@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 
 class CheatActivity : AppCompatActivity() {
 
@@ -17,7 +17,7 @@ class CheatActivity : AppCompatActivity() {
     private var answerIsTrue = false
 
     private val cheatViewModel: CheatViewModel by lazy {
-        ViewModelProviders.of(this).get(CheatViewModel::class.java)
+        ViewModelProvider(this).get(CheatViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
