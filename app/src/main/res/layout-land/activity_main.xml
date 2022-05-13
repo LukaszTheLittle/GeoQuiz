@@ -1,61 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/question_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/question_linear_layout">
+    android:gravity="center">
 
     <TextView
         android:id="@+id/question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:padding="24dp"
-        tools:text="@string/question_noriaki" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal">
-
-        <Button
-            android:id="@+id/true_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/true_button" />
-
-        <Button
-            android:id="@+id/false_button"
-            android:layout_width="101dp"
-            android:layout_height="wrap_content"
-            android:text="@string/false_button" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="@string/question_noriaki"
+        android:layout_marginBottom="100dp"/>
 
     <Button
-        android:id="@+id/cheat_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/false_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:text="@string/cheat_button"/>
+        android:text="@string/false_button"
+        app:layout_constraintEnd_toStartOf="@+id/true_button"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/question_text_view"
+        app:layout_constraintWidth_percent=".2" />
+
+    <Button
+        android:id="@+id/true_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/true_button"
+        app:layout_constraintStart_toEndOf="@id/false_button"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/question_text_view"
+        app:layout_constraintWidth_percent=".2" />
 
     <Button
         android:id="@+id/prev_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
         android:drawableLeft="@drawable/arrow_left"
         android:drawablePadding="4dp"
-        android:text="@string/prev_button"/>
+        android:text="@string/prev_button"
+        app:layout_constraintEnd_toStartOf="@+id/next_button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/false_button"
+        app:layout_constraintWidth_percent=".2" />
 
     <Button
         android:id="@+id/next_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:drawableEnd="@drawable/arrow_right"
         android:drawablePadding="4dp"
-        android:text="@string/next_button"/>
+        android:text="@string/next_button"
+        app:layout_constraintStart_toEndOf="@id/prev_button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/true_button"
+        app:layout_constraintWidth_percent=".2" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/cheat_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cheat_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/next_button"
+        app:layout_constraintWidth_percent=".3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

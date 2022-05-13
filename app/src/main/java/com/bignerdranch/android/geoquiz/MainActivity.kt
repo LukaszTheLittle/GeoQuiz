@@ -1,9 +1,6 @@
 package com.bignerdranch.android.geoquiz
 
-import android.annotation.SuppressLint
-import android.app.ActivityOptions
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,12 +9,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-
-private const val TAG = "MainActivity"
-private const val KEY_INDEX = "index"
-private const val REQUEST_CODE_CHEAT = 0
+import com.bignerdranch.android.geoquiz.CheatActivity.Companion.EXTRA_ANSWER_SHOWN
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         prevButton = findViewById(R.id.prev_button)
         cheatButton = findViewById(R.id.cheat_button)
         nextQuestionTextView = findViewById(R.id.question_text_view)
-        nextQuestionLinearLayout = findViewById(R.id.question_linear_layout)
+        nextQuestionLinearLayout = findViewById(R.id.question_constraint_layout)
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
@@ -146,4 +139,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        private const val TAG = "MainActivity"
+        private const val KEY_INDEX = "index"
+        private const val REQUEST_CODE_CHEAT = 0
+    }
 }
