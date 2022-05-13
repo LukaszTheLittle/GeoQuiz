@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    fun isAnswered () {
+    fun isAnswered() {
         val isQuestionAnswered = quizViewModel.isCurrentQuestionAnswered
         trueButton.isEnabled = !isQuestionAnswered
         falseButton.isEnabled = !isQuestionAnswered
