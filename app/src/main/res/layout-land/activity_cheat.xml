@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="@string/show_answer_button"
         app:layout_constraintTop_toBottomOf="@+id/answer_text_view"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
