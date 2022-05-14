@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 class QuizViewModel : ViewModel() {
 
     var currentIndex = 0
+    var score = 0.0
     var isCheater = false
 
     private val questionBank = listOf(
@@ -22,7 +23,10 @@ class QuizViewModel : ViewModel() {
         get() = questionBank[currentIndex].textResId
 
     val isCurrentQuestionAnswered: Boolean
-        get () = questionBank[currentIndex].isAnswered
+        get() = questionBank[currentIndex].isAnswered
+
+    val questionBankSize: Int
+        get() = questionBank.size
 
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
