@@ -76,10 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         cheatButton.setOnClickListener {
-            // start CheatActivity
-            val correctAnswer = quizViewModel.currentQuestionAnswer
-            val intent = CheatActivity.newIntent(this@MainActivity, correctAnswer)
-            getResult.launch(intent)
+            startCheatActivity()
         }
 
         updateQuestion()
@@ -135,9 +132,13 @@ class MainActivity : AppCompatActivity() {
             else -> R.string.incorrect_toast
         }
 
-        val toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.TOP, 0, 300)
-        toast.show()
+        if (userAnswer == correctAnswer) {
+            pointForCorrectAnswer()
+        }
+
+        val toastAnswerStatus = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
+        toastAnswerStatus.setGravity(Gravity.TOP, 0, 300)
+        toastAnswerStatus.show()
     }
 
     fun updateButtonsEnabledState() {
@@ -146,11 +147,24 @@ class MainActivity : AppCompatActivity() {
         falseButton.isEnabled = !isQuestionAnswered
     }
 
+    fun pointForCorrectAnswer() {
+        quizViewModel.score++
+    }
+
+    fun startCheatActivity() {
+        val correctAnswer = quizViewModel.currentQuestionAnswer
+        val intent = CheatActivity.newIntent(this@MainActivity, correctAnswer)
+        getResult.launch(intent)
+    }
+
     private val getResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
        if (it.resultCode == Activity.RESULT_OK) {
-           quizViewModel.isCheater = it.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+           quizViewModel.isCheater = it.data?.getBooleanExtra(
+               EXTRA_ANSWER_SHOWN,
+               false
+           ) ?: false
        }
     }
 
