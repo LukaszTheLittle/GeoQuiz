@@ -136,22 +136,41 @@ class MainActivity : AppCompatActivity() {
             pointForCorrectAnswer()
         }
 
-        val toastAnswerStatus = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
+        val toastAnswerStatus = Toast.makeText(
+            this,
+            messageResId,
+            Toast.LENGTH_SHORT
+        )
         toastAnswerStatus.setGravity(Gravity.TOP, 0, 300)
         toastAnswerStatus.show()
+
+        val scoreToast = Toast.makeText(
+                this,
+                "Twój wynik to " +
+                        "${(quizViewModel.score / quizViewModel.questionBankSize * 100).toInt()}%",
+                Toast.LENGTH_LONG
+            )
+        scoreToast.setGravity(Gravity.TOP, 0, 150)
+
+        if (quizViewModel.questionBankAreAnswered) {
+            toastAnswerStatus.show()
+            scoreToast.show()
+        } else {
+            toastAnswerStatus.show()
+        }
     }
 
-    fun updateButtonsEnabledState() {
+    private fun updateButtonsEnabledState() {
         val isQuestionAnswered = quizViewModel.isCurrentQuestionAnswered
         trueButton.isEnabled = !isQuestionAnswered
         falseButton.isEnabled = !isQuestionAnswered
     }
 
-    fun pointForCorrectAnswer() {
+    private fun pointForCorrectAnswer() {
         quizViewModel.score++
     }
 
-    fun startCheatActivity() {
+    private fun startCheatActivity() {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val intent = CheatActivity.newIntent(this@MainActivity, correctAnswer)
         getResult.launch(intent)
