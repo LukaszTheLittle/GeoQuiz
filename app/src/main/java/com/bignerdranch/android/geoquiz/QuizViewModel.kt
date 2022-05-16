@@ -28,6 +28,9 @@ class QuizViewModel : ViewModel() {
     val questionBankSize: Int
         get() = questionBank.size
 
+    val questionBankAreAnswered: Boolean
+        get() = questionBank.all { it.isAnswered }
+
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
     }
@@ -40,7 +43,7 @@ class QuizViewModel : ViewModel() {
         }
     }
 
-    fun questionIsAnswered () {
+    fun questionIsAnswered() {
         questionBank[currentIndex].isAnswered = true
     }
 
