@@ -43,11 +43,11 @@ class MainActivity : AppCompatActivity() {
         nextQuestionTextView = findViewById(R.id.question_text_view)
         nextQuestionLinearLayout = findViewById(R.id.question_constraint_layout)
 
-        trueButton.setOnClickListener { view: View ->
+        trueButton.setOnClickListener {
             checkAnswer(true)
         }
 
-        falseButton.setOnClickListener { view: View ->
+        falseButton.setOnClickListener {
             checkAnswer(false)
         }
 
