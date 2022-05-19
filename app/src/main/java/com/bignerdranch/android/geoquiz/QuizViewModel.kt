@@ -12,6 +12,12 @@ class QuizViewModel : ViewModel() {
         Question(R.string.question_btc, true)
     )
 
+    private var score = 0.0
+
+    private fun incrementScore() {
+        score++
+    }
+
     val currentQuestionAnswer: Boolean
         get() = questionBank[currentIndex].answer
 
@@ -27,7 +33,8 @@ class QuizViewModel : ViewModel() {
     val questionBankAreAnswered: Boolean
         get() = questionBank.all { it.isAnswered }
 
-    var score = 0.0
+    val getScore: Double = score
+
     var isCheater = false
     var currentIndex = 0
 
@@ -46,5 +53,10 @@ class QuizViewModel : ViewModel() {
     fun questionIsAnswered() {
         questionBank[currentIndex].isAnswered = true
     }
+
+    fun updateScore() {
+        incrementScore()
+    }
+
 }
 

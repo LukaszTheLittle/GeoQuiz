@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity() {
         val scoreToast = Toast.makeText(
                 this,
                 "Twój wynik to " +
-                        "${(quizViewModel.score / quizViewModel.questionBankSize * 100).toInt()}%",
+                        "${(quizViewModel.getScore / quizViewModel.questionBankSize * 100).toInt()}%",
                 Toast.LENGTH_LONG
             )
         scoreToast.setGravity(Gravity.TOP, 0, 150)
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun pointForCorrectAnswer() {
-        quizViewModel.score++
+        quizViewModel.updateScore()
     }
 
     private fun startCheatActivity() {
