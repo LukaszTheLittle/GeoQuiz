@@ -33,7 +33,8 @@ class QuizViewModel : ViewModel() {
     val questionBankAreAnswered: Boolean
         get() = questionBank.all { it.isAnswered }
 
-    val getScore: Double = score
+    val getScore: Double
+        get() = score
 
     var isCheater = false
     var currentIndex = 0
