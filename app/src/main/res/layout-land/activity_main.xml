@@ -53,7 +53,7 @@
         android:background="@drawable/button_background"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.35"
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -68,7 +68,7 @@
         android:background="@drawable/button_background"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.35"
         android:text="@string/next_button"
         />
 
