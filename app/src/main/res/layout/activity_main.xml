@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="@string/question_noriaki" />
+        tools:text="@string/question_noriaki"
+        />
 
     <Button
         android:id="@+id/false_button"
@@ -27,7 +28,8 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_text_view"
-        app:layout_constraintWidth_percent=".3"/>
+        app:layout_constraintWidth_percent=".3"
+        />
 
     <Button
         android:id="@+id/true_button"
@@ -38,7 +40,8 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_text_view"
-        app:layout_constraintWidth_percent=".3" />
+        app:layout_constraintWidth_percent=".3"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/prev_button"
@@ -80,6 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/next_button"
-        app:layout_constraintWidth_percent=".5" />
+        app:layout_constraintWidth_percent=".5"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
