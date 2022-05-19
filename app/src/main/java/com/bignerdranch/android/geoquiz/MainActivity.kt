@@ -44,11 +44,17 @@ class MainActivity : AppCompatActivity() {
         nextQuestionLinearLayout = findViewById(R.id.question_constraint_layout)
 
         trueButton.setOnClickListener {
-            checkAnswer(true)
+            checkAnswer(
+                true,
+                quizViewModel.answerData
+            )
         }
 
         falseButton.setOnClickListener {
-            checkAnswer(false)
+            checkAnswer(
+                false,
+                quizViewModel.answerData
+            )
         }
 
         nextButton.setOnClickListener {
@@ -119,21 +125,52 @@ class MainActivity : AppCompatActivity() {
         nextQuestionTextView.setText(questionTextResId)
     }
 
-    private fun checkAnswer(userAnswer: Boolean) {
-        val correctAnswer = quizViewModel.currentQuestionAnswer
+    private fun checkAnswer(
+        userAnswer: Boolean,
+        data: QuizViewModel.AnswerData
+    ) {
 
-        trueButton.isEnabled = false
-        falseButton.isEnabled = false
         quizViewModel.questionIsAnswered()
+        updateButtonsEnabledState()
 
-        val messageResId = when {
-            quizViewModel.isCheater -> R.string.judgment_toast
-            userAnswer == correctAnswer -> R.string.correct_toast
-            else -> R.string.incorrect_toast
+        if (userAnswer == data.correctAnswer) {
+            pointForCorrectAnswer()
         }
 
-        if (userAnswer == correctAnswer) {
-            pointForCorrectAnswer()
+        showToast(data.isQuestionAnswered, data.correctAnswer, data.isCheater, userAnswer)
+    }
+
+    private fun showToast(
+        isQuestionAnswered: Boolean,
+        correctAnswer: Boolean,
+        isCheater: Boolean,
+        userAnswer: Boolean
+    ) {
+        if (isQuestionAnswered) {
+            answerStatusToast(
+                correctAnswer,
+                isCheater,
+                userAnswer
+            )
+            scoreToast()
+        } else {
+            answerStatusToast(
+                correctAnswer,
+                isCheater,
+                userAnswer
+            )
+        }
+    }
+
+    private fun answerStatusToast(
+        correctAnswer: Boolean,
+        isCheater: Boolean,
+        userAnswer: Boolean
+    ) {
+        val messageResId = when {
+            isCheater -> JUDGEMENT_TOAST
+            userAnswer == correctAnswer -> CORRECT_TOAST
+            else -> INCORRECT_TOAST
         }
 
         val toastAnswerStatus = Toast.makeText(
@@ -143,21 +180,17 @@ class MainActivity : AppCompatActivity() {
         )
         toastAnswerStatus.setGravity(Gravity.TOP, 0, 300)
         toastAnswerStatus.show()
+    }
 
-        val scoreToast = Toast.makeText(
-                this,
-                "Twój wynik to " +
-                        "${(quizViewModel.getScore / quizViewModel.questionBankSize * 100).toInt()}%",
-                Toast.LENGTH_LONG
-            )
-        scoreToast.setGravity(Gravity.TOP, 0, 150)
-
-        if (quizViewModel.questionBankAreAnswered) {
-            toastAnswerStatus.show()
-            scoreToast.show()
-        } else {
-            toastAnswerStatus.show()
-        }
+    private fun scoreToast() {
+        val toastScore = Toast.makeText(
+            this,
+            "Twój wynik to " +
+                    "${(quizViewModel.getScore / quizViewModel.questionBankSize * 100).toInt()}%",
+            Toast.LENGTH_LONG
+        )
+        toastScore.setGravity(Gravity.TOP, 0, 150)
+        toastScore.show()
     }
 
     private fun updateButtonsEnabledState() {
@@ -180,15 +213,20 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) {
        if (it.resultCode == Activity.RESULT_OK) {
-           quizViewModel.isCheater = it.data?.getBooleanExtra(
-               EXTRA_ANSWER_SHOWN,
-               false
-           ) ?: false
+           quizViewModel.updateCheaterStatus(
+               it.data?.getBooleanExtra(
+                   EXTRA_ANSWER_SHOWN,
+                   false
+               ) ?: false
+           )
        }
     }
 
     companion object {
         private const val TAG = "MainActivity"
         private const val KEY_INDEX = "index"
+        private const val JUDGEMENT_TOAST = R.string.judgment_toast
+        private const val CORRECT_TOAST = R.string.correct_toast
+        private const val INCORRECT_TOAST = R.string.incorrect_toast
     }
 }
