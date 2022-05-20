@@ -14,6 +14,7 @@ class QuizViewModel : ViewModel() {
 
     private var score = 0.0
     private var isCheater = false
+    private var currentIndex = 0
 
     private fun incrementScore() {
         score++
@@ -22,14 +23,12 @@ class QuizViewModel : ViewModel() {
     data class AnswerData(
         val correctAnswer: Boolean,
         val isCheater: Boolean,
-        val isQuestionAnswered: Boolean
     )
 
     val answerData: AnswerData
         get() = AnswerData(
             questionBank[currentIndex].answer,
             isCheater,
-            questionBank[currentIndex].isAnswered
         )
 
     val currentQuestionAnswer: Boolean
@@ -50,10 +49,8 @@ class QuizViewModel : ViewModel() {
     val getScore: Double
         get() = score
 
-    val isCheaterStatus: Boolean
-        get() = isCheater
-
-    var currentIndex = 0
+    val getCurrentIndex: Int
+        get() = currentIndex
 
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
