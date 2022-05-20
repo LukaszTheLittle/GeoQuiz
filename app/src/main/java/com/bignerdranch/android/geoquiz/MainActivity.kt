@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
 
-        val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
-        quizViewModel.currentIndex = currentIndex
-
         trueButton = findViewById(R.id.true_button)
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
@@ -107,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         Log.i(TAG, "onSaveInstanceState")
-        savedInstanceState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+        savedInstanceState.putInt(KEY_INDEX, quizViewModel.getCurrentIndex)
     }
 
     override fun onStop() {
@@ -137,16 +134,15 @@ class MainActivity : AppCompatActivity() {
             pointForCorrectAnswer()
         }
 
-        showToast(data.isQuestionAnswered, data.correctAnswer, data.isCheater, userAnswer)
+        showToast(data.correctAnswer, data.isCheater, userAnswer)
     }
 
     private fun showToast(
-        isQuestionAnswered: Boolean,
         correctAnswer: Boolean,
         isCheater: Boolean,
         userAnswer: Boolean
     ) {
-        if (isQuestionAnswered) {
+        if (quizViewModel.questionBankAreAnswered) {
             answerStatusToast(
                 correctAnswer,
                 isCheater,
@@ -173,11 +169,7 @@ class MainActivity : AppCompatActivity() {
             else -> INCORRECT_TOAST
         }
 
-        val toastAnswerStatus = Toast.makeText(
-            this,
-            messageResId,
-            Toast.LENGTH_SHORT
-        )
+        val toastAnswerStatus = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
         toastAnswerStatus.setGravity(Gravity.TOP, 0, 300)
         toastAnswerStatus.show()
     }
