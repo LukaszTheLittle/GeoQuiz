@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
 
-        val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
-        quizViewModel.currentIndex = currentIndex
-
         trueButton = findViewById(R.id.true_button)
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
@@ -43,12 +40,18 @@ class MainActivity : AppCompatActivity() {
         nextQuestionTextView = findViewById(R.id.question_text_view)
         nextQuestionLinearLayout = findViewById(R.id.question_constraint_layout)
 
-        trueButton.setOnClickListener { view: View ->
-            checkAnswer(true)
+        trueButton.setOnClickListener {
+            checkAnswer(
+                true,
+                quizViewModel.answerData
+            )
         }
 
-        falseButton.setOnClickListener { view: View ->
-            checkAnswer(false)
+        falseButton.setOnClickListener {
+            checkAnswer(
+                false,
+                quizViewModel.answerData
+            )
         }
 
         nextButton.setOnClickListener {
@@ -76,10 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         cheatButton.setOnClickListener {
-            // start CheatActivity
-            val correctAnswer = quizViewModel.currentQuestionAnswer
-            val intent = CheatActivity.newIntent(this@MainActivity, correctAnswer)
-            getResult.launch(intent)
+            startCheatActivity()
         }
 
         updateQuestion()
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         Log.i(TAG, "onSaveInstanceState")
-        savedInstanceState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+        savedInstanceState.putInt(KEY_INDEX, quizViewModel.getCurrentIndex)
     }
 
     override fun onStop() {
@@ -122,40 +122,103 @@ class MainActivity : AppCompatActivity() {
         nextQuestionTextView.setText(questionTextResId)
     }
 
-    private fun checkAnswer(userAnswer: Boolean) {
-        val correctAnswer = quizViewModel.currentQuestionAnswer
+    private fun checkAnswer(
+        userAnswer: Boolean,
+        data: QuizViewModel.AnswerData
+    ) {
 
-        trueButton.isEnabled = false
-        falseButton.isEnabled = false
         quizViewModel.questionIsAnswered()
+        updateButtonsEnabledState()
 
-        val messageResId = when {
-            quizViewModel.isCheater -> R.string.judgment_toast
-            userAnswer == correctAnswer -> R.string.correct_toast
-            else -> R.string.incorrect_toast
+        if (userAnswer == data.correctAnswer) {
+            pointForCorrectAnswer()
         }
 
-        val toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.TOP, 0, 300)
-        toast.show()
+        showToast(data.correctAnswer, data.isCheater, userAnswer)
     }
 
-    fun updateButtonsEnabledState() {
+    private fun showToast(
+        correctAnswer: Boolean,
+        isCheater: Boolean,
+        userAnswer: Boolean
+    ) {
+        if (quizViewModel.questionBankAreAnswered) {
+            answerStatusToast(
+                correctAnswer,
+                isCheater,
+                userAnswer
+            )
+            scoreToast()
+        } else {
+            answerStatusToast(
+                correctAnswer,
+                isCheater,
+                userAnswer
+            )
+        }
+    }
+
+    private fun answerStatusToast(
+        correctAnswer: Boolean,
+        isCheater: Boolean,
+        userAnswer: Boolean
+    ) {
+        val messageResId = when {
+            isCheater -> JUDGEMENT_TOAST
+            userAnswer == correctAnswer -> CORRECT_TOAST
+            else -> INCORRECT_TOAST
+        }
+
+        val toastAnswerStatus = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
+        toastAnswerStatus.setGravity(Gravity.TOP, 0, 300)
+        toastAnswerStatus.show()
+    }
+
+    private fun scoreToast() {
+        val toastScore = Toast.makeText(
+            this,
+            "Twój wynik to " +
+                    "${(quizViewModel.getScore / quizViewModel.questionBankSize * 100).toInt()}%",
+            Toast.LENGTH_LONG
+        )
+        toastScore.setGravity(Gravity.TOP, 0, 150)
+        toastScore.show()
+    }
+
+    private fun updateButtonsEnabledState() {
         val isQuestionAnswered = quizViewModel.isCurrentQuestionAnswered
         trueButton.isEnabled = !isQuestionAnswered
         falseButton.isEnabled = !isQuestionAnswered
+    }
+
+    private fun pointForCorrectAnswer() {
+        quizViewModel.updateScore()
+    }
+
+    private fun startCheatActivity() {
+        val correctAnswer = quizViewModel.currentQuestionAnswer
+        val intent = CheatActivity.newIntent(this@MainActivity, correctAnswer)
+        getResult.launch(intent)
     }
 
     private val getResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
        if (it.resultCode == Activity.RESULT_OK) {
-           quizViewModel.isCheater = it.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+           quizViewModel.updateCheaterStatus(
+               it.data?.getBooleanExtra(
+                   EXTRA_ANSWER_SHOWN,
+                   false
+               ) ?: false
+           )
        }
     }
 
     companion object {
         private const val TAG = "MainActivity"
         private const val KEY_INDEX = "index"
+        private const val JUDGEMENT_TOAST = R.string.judgment_toast
+        private const val CORRECT_TOAST = R.string.correct_toast
+        private const val INCORRECT_TOAST = R.string.incorrect_toast
     }
 }

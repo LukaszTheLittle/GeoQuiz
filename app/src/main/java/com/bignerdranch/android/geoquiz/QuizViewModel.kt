@@ -4,9 +4,6 @@ import androidx.lifecycle.ViewModel
 
 class QuizViewModel : ViewModel() {
 
-    var currentIndex = 0
-    var isCheater = false
-
     private val questionBank = listOf(
         Question(R.string.question_noriaki, true),
         Question(R.string.question_audi, false),
@@ -15,6 +12,25 @@ class QuizViewModel : ViewModel() {
         Question(R.string.question_btc, true)
     )
 
+    private var score = 0.0
+    private var isCheater = false
+    private var currentIndex = 0
+
+    private fun incrementScore() {
+        score++
+    }
+
+    data class AnswerData(
+        val correctAnswer: Boolean,
+        val isCheater: Boolean,
+    )
+
+    val answerData: AnswerData
+        get() = AnswerData(
+            questionBank[currentIndex].answer,
+            isCheater,
+        )
+
     val currentQuestionAnswer: Boolean
         get() = questionBank[currentIndex].answer
 
@@ -22,7 +38,19 @@ class QuizViewModel : ViewModel() {
         get() = questionBank[currentIndex].textResId
 
     val isCurrentQuestionAnswered: Boolean
-        get () = questionBank[currentIndex].isAnswered
+        get() = questionBank[currentIndex].isAnswered
+
+    val questionBankSize: Int
+        get() = questionBank.size
+
+    val questionBankAreAnswered: Boolean
+        get() = questionBank.all { it.isAnswered }
+
+    val getScore: Double
+        get() = score
+
+    val getCurrentIndex: Int
+        get() = currentIndex
 
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
@@ -36,8 +64,16 @@ class QuizViewModel : ViewModel() {
         }
     }
 
-    fun questionIsAnswered () {
+    fun questionIsAnswered() {
         questionBank[currentIndex].isAnswered = true
+    }
+
+    fun updateScore() {
+        incrementScore()
+    }
+
+    fun updateCheaterStatus(status: Boolean) {
+        isCheater = status
     }
 
 }

@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="@string/question_noriaki" />
+        tools:text="@string/question_noriaki"
+        />
 
     <Button
         android:id="@+id/false_button"
@@ -27,7 +28,8 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_text_view"
-        app:layout_constraintWidth_percent=".3"/>
+        app:layout_constraintWidth_percent=".3"
+        />
 
     <Button
         android:id="@+id/true_button"
@@ -38,33 +40,40 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_text_view"
-        app:layout_constraintWidth_percent=".3" />
+        app:layout_constraintWidth_percent=".3"
+        />
 
-        <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/prev_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/arrow_left"
-        android:drawablePadding="4dp"
-        android:text="@string/prev_button"
-        app:layout_constraintEnd_toStartOf="@+id/next_button"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/next_button"
         app:layout_constraintTop_toBottomOf="@id/false_button"
-        app:layout_constraintWidth_percent=".3" />
+        android:drawableStart="@drawable/arrow_left"
+        android:text="@string/prev_button"
+        android:textColor="@color/white"
+        android:background="@drawable/button_background"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintWidth_percent="0.35"
+        />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/arrow_right"
-        android:drawablePadding="4dp"
-        android:text="@string/next_button"
-        app:layout_constraintStart_toEndOf="@id/prev_button"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/true_button"
-        app:layout_constraintWidth_percent=".3" />
+        app:layout_constraintStart_toEndOf="@id/prev_button"
+        app:layout_constraintTop_toBottomOf="@id/false_button"
+        android:drawableEnd="@drawable/arrow_right"
+        android:textColor="@color/white"
+        android:background="@drawable/button_background"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintWidth_percent="0.35"
+        android:text="@string/next_button"
+        />
 
     <Button
         android:id="@+id/cheat_button"
@@ -74,6 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/next_button"
-        app:layout_constraintWidth_percent=".5" />
+        app:layout_constraintWidth_percent=".5"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
